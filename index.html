@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dungeon Loot Picker</title>
+  <style>
+    body {
+      background-color: #121212;
+      color: #eee;
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .app {
+      text-align: center;
+      background: #1e1e1e;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+      width: 350px;
+    }
+    button {
+      margin-top: 15px;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      background: #3a3a3a;
+      border: none;
+      border-radius: 8px;
+      color: #fff;
+    }
+    button:hover { background: #575757; }
+    .result { margin-top: 20px; font-size: 18px; font-weight: bold; }
+    .history { margin-top: 15px; font-size: 14px; text-align: left; }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <h1>🎲 Dungeon Loot Picker</h1>
+    <label for="dungeon">Choose a Dungeon Rank:</label>
+    <select id="dungeon">
+      <option value="E">E-Rank</option>
+      <option value="D">D-Rank</option>
+      <option value="C">C-Rank</option>
+      <option value="B">B-Rank</option>
+      <option value="A">A-Rank</option>
+      <option value="S">S-Rank</option>
+    </select>
+    <button id="rollBtn">Roll Loot</button>
+    <div id="result" class="result">Press "Roll Loot" to begin...</div>
+    <div id="history" class="history"></div>
+  </div>
+
+  <script>
+    const lootTable = {
+      "Common": ["XP stone (5 XP)", "Goblin tooth ($1)", "Bat wing ($2)", "Health potion (skip 1 daily)"],
+      "Rare": ["XP stone (20 XP)", "Weapon upgrade stone (Common→Rare)", "Armor upgrade stone (Common→Rare)", "Health potion (skip all daily)"],
+      "Epic": ["XP stone (50 XP)", "Scrolls (1 XP/min in dungeon)", "Weapon upgrade stone (Rare→Epic)", "Armor upgrade stone (Rare→Epic)"],
+      "Legendary": ["XP stone (300 XP)", "Dragon scale (+50% XP & Gold)", "Phoenix feather (restore streak)", "Elixir of vitality (Double XP/Gold for 1 dungeon)", "Contract stone (Legendary pet help 10 days)"]
+    };
+
+    const dungeonRarities = {
+      "E": {"Common":0.9,"Rare":0.08,"Epic":0.019,"Legendary":0.001},
+      "D": {"Common":0.6,"Rare":0.35,"Epic":0.049,"Legendary":0.001},
+      "C": {"Common":0.5,"Rare":0.4,"Epic":0.09,"Legendary":0.01},
+      "B": {"Common":0.1,"Rare":0.65,"Epic":0.2,"Legendary":0.05},
+      "A": {"Common":0,"Rare":0.3,"Epic":0.4,"Legendary":0.3},
+      "S": {"Common":0,"Rare":0,"Epic":0.3,"Legendary":0.65}
+    };
+
+    function rollRarity(dungeon) {
+      const rand = Math.random();
+      const rarities = dungeonRarities[dungeon];
+      let cumulative = 0;
+      for (let key in rarities) {
+        cumulative += rarities[key];
+        if (rand <= cumulative) return key;
+      }
+      return "Common"; // fallback
+    }
+
+    document.getElementById("rollBtn").addEventListener("click", () => {
+      const dungeon = document.getElementById("dungeon").value;
+      const rarity = rollRarity(dungeon);
+      const lootList = lootTable[rarity];
+      const loot = lootList[Math.floor(Math.random() * lootList.length)];
+
+      const resultDiv = document.getElementById("result");
+      const historyDiv = document.getElementById("history");
+
+      resultDiv.textContent = `You found a ${rarity} item: ${loot}!`;
+      historyDiv.innerHTML = `<p>${resultDiv.textContent}</p>` + historyDiv.innerHTML;
+    });
+  </script>
+</body>
+</html>
