@@ -57,19 +57,19 @@
 
   <script>
     const lootTable = {
-      "Common": ["XP stone (5 XP)", "Goblin tooth ($1)", "Bat wing ($2)", "Health potion (skip 1 daily)"],
-      "Rare": ["XP stone (20 XP)", "Health potion (skip all daily)"],
-      "Epic": ["XP stone (50 XP)", "Scrolls (1 XP/min in dungeon)","Upgrade stone (Common→Rare)"],
-      "Legendary": ["XP stone (300 XP)", "Upgrade stone (Rare→Epic)", "Dragon scale (+50% XP & Gold)", "Phoenix feather (restore streak)", "Elixir of vitality (Double XP/Gold for 1 dungeon)", ]
+      "Common": ["XP stone (5 XP)", "Goblin tooth ($1)", "Bat wing ($2)", ],
+      "Rare": ["XP stone (20 XP)", "Small health potion (skip 1 daily)", "Upgrade stone (Common→Rare)],
+      "Epic": ["XP stone (50 XP)", "Scrolls (1 XP/min in dungeon)", "Big health potion (skip all dailies)", "Upgrade stone (Rare→Epic)"],
+      "Legendary": ["XP stone (300 XP)", "Upgrade stone (Epic→Legendary)", "Dragon scale (double XP & Gold on quests for 10 days)", "Elixir of vitality (Double XP/Gold for 1 dungeon)"]
     };
 
     const dungeonRarities = {
       "E": {"Common":0.9,"Rare":0.08,"Epic":0.019,"Legendary":0.001},
       "D": {"Common":0.6,"Rare":0.35,"Epic":0.049,"Legendary":0.001},
-      "C": {"Common":0.5,"Rare":0.4,"Epic":0.09,"Legendary":0.01},
-      "B": {"Common":0.1,"Rare":0.65,"Epic":0.2,"Legendary":0.05},
-      "A": {"Common":0,"Rare":0.3,"Epic":0.4,"Legendary":0.3},
-      "S": {"Common":0,"Rare":0,"Epic":0.3,"Legendary":0.65}
+      "C": {"Common":0.45,"Rare":0.45,"Epic":0.09,"Legendary":0.01},
+      "B": {"Common":0.1,"Rare":0.4,"Epic":0.4,"Legendary":0.1},
+      "A": {"Common":0,"Rare":0.1,"Epic":0.55,"Legendary":0.35},
+      "S": {"Common":0,"Rare":0,"Epic":0.35,"Legendary":0.65}
     };
 
     function rollRarity(dungeon) {
